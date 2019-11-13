@@ -1,0 +1,70 @@
+1. Title: E. coli transcriptome data with phenotypic characterization
+
+2. Creator and Maintainer:
+	Minseung Kim (msgkim@ucdavis.edu) and
+	Ilias Tagkopoulos (iliast@ucdavis.edu
+	University of California, Davis
+	Department of Computer Science
+	Genome Center
+
+3. Number of Instances: 195
+
+4. Number of Attributes: 4502
+
+5. Attribute Information:
+	1. ID: profile ID (integer) 
+	2. Strain: E. coli strain name (string)
+		(1) BW25113
+		(2) CG2
+		(3) DH5alpha
+		(4) MG1655
+		(5) P2
+		(6) P4X
+		(7) W3110
+		(8) rpoA14
+		(9) rpoA27
+		(10) rpoD3
+	3. Medium: supplied medium indexed as MDXXX (string)
+		(1) MD001 : M9 + Glucose (5mL of 40% solution of Glucose)
+		(2) MD002 : M9 + Glycerol (5mL of 40% solution of Glycerol)
+		(3) MD003 : M9 + Lactose (5mL of 40% solution of Lactose)
+		(4) MD004 : LB (undefined medium)
+		(5) MD005 : minimal medium + low-Glucose (0.1g/L)
+		(6) MD006 : LB + KCl
+		(7) MD007 : minimal medium + Glucose
+		(8) MD008 : minimal medium + Glucose + Arginine
+		(9) MD009 : mineral medium + low-Glucose (0.1g/L)
+		(10) MD010 : GGM
+		(11) MD011 : defined medium + Glycerol
+		(12) MD012 : M9 + Glucose + Galactose + Glycerol + Lactose + Maltose
+		(13) MD013 : defined mineral medium + Glucose
+		(14) MD014 : modified MOPS + Glycerol
+		(15) MD015 : MOPS + Glucose + NH4Cl
+		(16) MD016 : TB (undefined medium)
+		(17) MD017 : MOPS + Succinate
+		(18) MD018 : Evans
+	4. Environmental_perturbation: stresses present in the environment (string)
+		(1) Indole : inhibitor of quorum-sensing signal
+		(2) O2-starvation : oxygen starvation 
+		(3) RP-overexpress : overexpression of a recombinant protein
+		(4) Antibacterial : presence of antibiotics (no resistant genes in the strain)
+		(5) Carbon-limitation : limited carbon source
+		(6) Dna-damage : DNA damage agents
+		(7) Zinc-limitation : limited Zinc source
+		(8) None : no stress
+	5. Gene_Perturbation: knock-out or overexpression of a specific gene (string)
+		(1) appY_KO : Knock-out of the appY gene
+		(2) arcA_KO : Knock-out of arcA gene
+		(3) argR_KO : Knock-out of argR gene
+		(4) cya_KO : Knock-out of cya gene
+		(5) fis_OE : Over-expressino of fis gene
+		(6) fnr_KO : Knock-out of fnr gene
+		(7) frdC_KO : Knock-out of frdC gene
+		(8) na_WT : wild-type
+		(9) oxyR_KO : Knock-out of oxyR
+		(10) rpoS_KO : Knock-out of rpoS
+		(11) soxS_KO : Knock-out of soxS
+		(12) tnaA_KO : Knock-out of tnaA
+	6. Growth_Rate (floating point)
+	7-4502. Gene expression for all 4496 genes. GeneID is given by bnumber and gene names can be found in the 
+		gene_name.txt. For more information about each gene, visit www.ecocyc.org
