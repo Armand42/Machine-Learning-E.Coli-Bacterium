@@ -15,7 +15,7 @@ np.random.seed(0)
 warnings.filterwarnings("ignore")
 
 # Import the dataset 
-dataset = pd.read_csv('ecs171.dataset.txt', delim_whitespace=True).dropna()
+dataset = pd.read_csv('ecs171.dataset.txt', delim_whitespace=True)
 
 # X features
 X = dataset.iloc[:,6:4503]
