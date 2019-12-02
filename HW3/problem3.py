@@ -45,28 +45,20 @@ X_mean = np.mean(X, axis=0)
 X_mean = X_mean.values.reshape(1,-1)
 y_mean = np.array([np.mean(y,axis = 0)])
 
-
-
 # Configure bootstrap
-n_iterations = 300
-# run bootstrap
+num_iterations = 300
 stats = list()
 
-
-for i in range(n_iterations):
-    # prepare train and test sets
+for i in range(num_iterations):
+     # prepare train and test sets for dataset sampling
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
-    
-    
     # fitting the model to lasso regression
     model = linear_model.Lasso(alpha=grid.best_estimator_.alpha)
     model.fit(X_train, y_train)
 	# evaluate model
     predictions = model.predict(X_mean)
-    
     # calculate score
     score = mean_squared_error(y_mean,predictions)
-    print(score)
     stats.append(score)
 # plot scores
 pyplot.hist(stats)

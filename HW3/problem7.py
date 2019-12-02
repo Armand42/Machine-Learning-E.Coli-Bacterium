@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov 27 17:30:01 2019
+Created on Sun Dec  1 11:00:16 2019
 
 @author: armandnasserischool
 """
-
 import numpy as np
 from sklearn import linear_model
 from sklearn.model_selection import GridSearchCV
@@ -13,6 +12,8 @@ import matplotlib.pyplot as plt
 from sklearn.feature_selection import SelectFromModel
 from scipy import interp
 from sklearn.model_selection import KFold
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
 from sklearn.metrics import precision_recall_curve
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import auc
@@ -27,13 +28,14 @@ warnings.filterwarnings("ignore")
 # Import the dataset 
 dataset = pd.read_csv('ecs171.dataset.txt', delim_whitespace=True)
 
-
 # X features
 X = dataset.iloc[:,6:]
 # Dropping the last column to avoid type error
 X = X.iloc[:, :-1]
 # Creates an svm with roc and pr curves
-def buildSVM(X,y,rocCurveName, prCurveName):
+
+# Creates an svm with roc and pr curves
+def buildSVM(X,y,rocCurveName, prCurveName, method):
     # y prediction
     newY = dataset[y]
     # Need to binary encode categorical variable
@@ -48,13 +50,17 @@ def buildSVM(X,y,rocCurveName, prCurveName):
     lassoBest = linear_model.Lasso(alpha=grid.best_estimator_.alpha, max_iter=1000)
     lassoBest.fit(X,newYY)
 
-    # Creating a 5-fold cross validation object
-    kf = KFold(n_splits=5, random_state=1)
+    # Creating a 10-fold cross validation object
+    kf = KFold(n_splits=10, random_state=1)
     # Need One vs Rest to handle multiclass shaping issue
     svm =  OneVsRestClassifier(SVC(C=0.25, kernel='linear', probability = True))
-    # Returns the new dataset of features after applying lasso (removes non-zero coefficients too)
-    model = SelectFromModel(lassoBest, prefit=True)
-    X_new = model.transform(X)
+    # Returns the new dataset of features after applying PCA
+    if (method == 'pca'):
+        model = PCA(n_components=2)
+        X_new = model.fit_transform(X)
+    elif(method == 'tsne'):
+        X_new = TSNE(n_components=2).fit_transform(X)
+        
   
     # vectors to hold results
     tprs = []
@@ -117,9 +123,15 @@ def buildSVM(X,y,rocCurveName, prCurveName):
     plt.legend(loc="lower left")
     plt.show()
     
-# Generating svm plots    
-buildSVM(X,'Strain','ROC with 5-Fold Cross Validation (Strain)','Precision Recall (Strain)')
-buildSVM(X,'Medium','ROC with 5-Fold Cross Validation (Medium)','Precision Recall (Medium)')
-buildSVM(X,'Stress','ROC with 5-Fold Cross Validation (Stress)', 'Precision Recall (Stress)')
-buildSVM(X,'GenePerturbed','ROC with 5-Fold Cross Validation (Gene Perturbed)','Precision Recall (Gene Perturbed)')
+# Generating svm plots for pca  
+buildSVM(X,'Strain','ROC with 10-Fold Cross Validation (Strain) & PCA','Precision Recall (Strain) & PCA', 'pca')
+buildSVM(X,'Medium','ROC with 10-Fold Cross Validation (Medium) & PCA','Precision Recall (Medium) & PCA','pca')
+buildSVM(X,'Stress','ROC with 10-Fold Cross Validation (Stress) & PCA', 'Precision Recall (Stress) & PCA','pca')
+buildSVM(X,'GenePerturbed','ROC with 10-Fold Cross Validation (Gene Perturbed) & PCA','Precision Recall (Gene Perturbed) & PCA','pca')
+# Generating svm plots for tsne 
+buildSVM(X,'Strain','ROC with 10-Fold Cross Validation (Strain) & TSNE','Precision Recall (Strain) & TSNE', 'tsne')
+buildSVM(X,'Medium','ROC with 10-Fold Cross Validation (Medium) & TSNE','Precision Recall (Medium) & TSNE','tsne')
+buildSVM(X,'Stress','ROC with 10-Fold Cross Validation (Stress) & TSNE', 'Precision Recall (Stress) & TSNE','tsne')
+buildSVM(X,'GenePerturbed','ROC with 10-Fold Cross Validation (Gene Perturbed) & TSNE','Precision Recall (Gene Perturbed) & TSNE','tsne')
+
 
