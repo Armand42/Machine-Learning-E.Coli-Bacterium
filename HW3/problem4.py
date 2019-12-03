@@ -82,7 +82,7 @@ def buildSVM(X,y,rocCurveName):
         roc_auc = auc(fpr, tpr)
         plt.plot(fpr, tpr, alpha=0.8, label='%d fold (AUC: %0.2f)' % (i, roc_auc))
         i += 1
-    # Plotting the AUC and AUPRC values
+    # Plotting the AUC values
     plt.plot([0, 1], [0, 1], linestyle='--', lw=2, color='r', label='Chance', alpha=.8)
     
     
@@ -153,15 +153,13 @@ def buildSVM2(X,y,prCurveName):
         # Fitting the PR curve
         precision, recall, _ = precision_recall_curve(y_test.ravel(), score.ravel())
         
-        #area = auc(precision, recall)
-        
         tprs.append(interp(mean_fpr, precision, recall))
         tprs[-1][0] = 0.0
         aucs.append(roc_auc)
         roc_auc = average_precision_score(y_test.ravel(), score.ravel())
         plt.plot(precision, recall, alpha=0.8, label='%d fold (AUC: %0.2f)' % (i, roc_auc))
         i += 1
-    # Plotting the AUC and AUPRC values
+    # Plotting the AUPRC values
     plt.plot([0, 1], [0, 1], linestyle='--', lw=2, color='r', label='Chance', alpha=.8)
     
     

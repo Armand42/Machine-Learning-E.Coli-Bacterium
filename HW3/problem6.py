@@ -24,7 +24,7 @@ X = dataset.iloc[:,6:]
 # Dropping the last column to avoid type error
 X = X.iloc[:, :-1]
 X = StandardScaler().fit_transform(X)
-
+# Plots PCA
 def plotPCA(X):
     pca = PCA(n_components=2)
     principalComponents = pca.fit_transform(X)
@@ -34,7 +34,7 @@ def plotPCA(X):
     plt.title("PCA Plot")
     
     sns.scatterplot(x = newX['principal component 1'], y = newX['principal component 2'])
-   
+# Plots TSNE
 def plotTSNE(X):
     X_embedded = TSNE(n_components=2).fit_transform(X)
     tsneDf = pd.DataFrame(data = X_embedded, columns = ['tsne 1', 'tsne 2'])

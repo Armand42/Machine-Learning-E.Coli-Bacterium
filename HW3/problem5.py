@@ -43,8 +43,6 @@ def buildSVM(X,y,y2,rocCurveName):
     for med, strs in zip(newY, newY2): 
         Y_tot.append([med,strs])
         
-    
-    #pairs = [zip(i) for i in newY.values]
     # Need to binary encode categorical variable
     multibinarizer = MultiLabelBinarizer()
     newYY = multibinarizer.fit_transform(Y_tot)
@@ -126,8 +124,6 @@ def buildSVM2(X,y,y2, prCurveName):
     for med, strs in zip(newY, newY2): 
         Y_tot.append([med,strs])
         
-    
-    #pairs = [zip(i) for i in newY.values]
     # Need to binary encode categorical variable
     multibinarizer = MultiLabelBinarizer()
     newYY = multibinarizer.fit_transform(Y_tot)
@@ -168,8 +164,6 @@ def buildSVM2(X,y,y2, prCurveName):
         score = svm.fit(X_train, y_train).predict(X_test)
         # Fitting the PR curve
         precision, recall, _ = precision_recall_curve(y_test.ravel(), score.ravel())
-        
-        #area = auc(precision, recall)
         
         tprs.append(interp(mean_fpr, precision, recall))
         tprs[-1][0] = 0.0
