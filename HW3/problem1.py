@@ -25,10 +25,10 @@ X = X.iloc[:, :-1]
 y = dataset['GrowthRate']
 
 # Set the different values of alpha to be tested
-alpha_ridge = np.array([1e-15, 1e-10, 1e-8, 1e-4, 1e-3,1e-2, 1, 5, 10, 20])
+alpha_lasso = np.array([1e-15, 1e-10, 1e-8, 1e-4, 1e-3,1e-2, 1, 5, 10, 20])
 # Applying lasso regression and grid search to determine optimal alpha value
 lasso = linear_model.Lasso()
-grid = GridSearchCV(estimator=lasso, scoring = "neg_mean_squared_error",param_grid = dict(alpha=alpha_ridge), cv = 5)
+grid = GridSearchCV(estimator=lasso, scoring = "neg_mean_squared_error",param_grid = dict(alpha=alpha_lasso), cv = 5)
 grid.fit(X,y)
 # Inserting optimal lambda value into another lasso regression to reduce the amount of features
 lassoBest = linear_model.Lasso(alpha=grid.best_estimator_.alpha, max_iter=10e5)
